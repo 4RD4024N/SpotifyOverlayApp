@@ -28,3 +28,7 @@ C:\Users\arda0\Desktop\SpotifyOverlayApp\SpotifyOverlayApp\bin\Debug\net8.0-wind
 C:\Users\arda0\Desktop\SpotifyOverlayApp\SpotifyOverlayApp\obj\Debug\net8.0-windows\SpotifyOverlayApp.csproj.AssemblyReference.cache
 C:\Users\arda0\Desktop\SpotifyOverlayApp\SpotifyOverlayApp\obj\Debug\net8.0-windows\SpotifyO.67D01FBF.Up2Date
 C:\Users\arda0\Desktop\SpotifyOverlayApp\SpotifyOverlayApp\bin\Debug\net8.0-windows\icon.ico
+C:\Users\arda0\Desktop\SpotifyOverlayApp\SpotifyOverlayApp\obj\Debug\net8.0-windows\App.baml
+C:\Users\arda0\Desktop\SpotifyOverlayApp\SpotifyOverlayApp\obj\Debug\net8.0-windows\SpotifyOverlayApp.sourcelink.json
+C:\Users\arda0\Desktop\SpotifyOverlayApp\SpotifyOverlayApp\obj\Debug\net8.0-windows\SettingsWindow.baml
+C:\Users\arda0\Desktop\SpotifyOverlayApp\SpotifyOverlayApp\obj\Debug\net8.0-windows\SettingsWindow.g.cs

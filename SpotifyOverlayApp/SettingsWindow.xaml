@@ -1,0 +1,31 @@
+﻿<Window x:Class="SpotifyOverlayNoAPI.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Ayarlar"
+        Height="250" Width="300"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="#FF1E1E1E"
+        Foreground="White">
+    <Grid Margin="20">
+        <StackPanel>
+            <TextBlock Text="Hazır Tema Seç:" FontSize="14" FontWeight="Bold" Margin="0,0,0,10"/>
+            <ComboBox x:Name="ThemeComboBox" SelectionChanged="ThemeComboBox_SelectionChanged">
+                <ComboBoxItem Content="Varsayılan" Tag="CurrentGradient"/>
+                <ComboBoxItem Content="Mavi" Tag="BluePalette"/>
+                <ComboBoxItem Content="Kırmızı" Tag="RedPalette"/>
+                <ComboBoxItem Content="Yeşil" Tag="GreenPalette"/>
+                <ComboBoxItem Content="Mor" Tag="PurplePalette"/>
+                <ComboBoxItem Content="Turuncu" Tag="OrangePalette"/>
+                <ComboBoxItem Content="Gri" Tag="GrayPalette"/>
+            </ComboBox>
+
+
+            <TextBlock Text="Gelişmiş Renk (HEX) Seç:" FontWeight="Bold" Margin="0,20,0,4"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBox x:Name="HexInput" Width="100" Height="25" Text="#FF007ACC" Margin="0,0,5,0"/>
+                <Button Content="Uygula" Click="ApplyCustomHex_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
