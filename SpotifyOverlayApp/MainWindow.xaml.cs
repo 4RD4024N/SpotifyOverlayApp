@@ -33,7 +33,6 @@ namespace SpotifyOverlayNoAPI
             var hwnd = new WindowInteropHelper(this).Handle;
             int extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
             SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TOOLWINDOW);
-
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -77,6 +76,22 @@ namespace SpotifyOverlayNoAPI
             float volume = GetSystemVolume();
 
             VolumeText.Text = $"🔊 Volume : %{volume:F0}";
+
+            // Smooth volume animation
+            double newVolume = volume;
+            double currentValue = VolumeBar.Value;
+            double delta = Math.Abs(newVolume - currentValue);
+            double durationMs = Math.Max(60, 300 - delta * 3);
+
+            var animation = new DoubleAnimation
+            {
+                From = currentValue,
+                To = newVolume,
+                Duration = TimeSpan.FromMilliseconds(durationMs),
+                EasingFunction = new CircleEase { EasingMode = EasingMode.EaseOut }
+            };
+            VolumeBar.BeginAnimation(ProgressBar.ValueProperty, animation);
+
             bool volumeChanged = Math.Abs(volume - lastVolume) > 0.5;
             lastVolume = volume;
 
@@ -101,16 +116,24 @@ namespace SpotifyOverlayNoAPI
                 hideTimer.Stop();
                 hideTimer.Start();
             }
-        }
-        private void SetClickThrough(bool enable)
-        {
-            var hwnd = new WindowInteropHelper(this).Handle;
-            int extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
 
-            if (enable)
-                SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TRANSPARENT);
+            UpdatePlaybackStatus(currentTitle);
+        }
+
+        private void UpdatePlaybackStatus(string title)
+        {
+            if (string.IsNullOrEmpty(title) || title == "Spotify" || title == "Spotify Premium")
+            {
+                PlayPauseIcon.Text = "⏸";
+                var shrink = (Storyboard)this.Resources["PausedShrink"];
+                shrink.Begin();
+            }
             else
-                SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle & ~WS_EX_TRANSPARENT);
+            {
+                PlayPauseIcon.Text = "▶️";
+                var grow = (Storyboard)this.Resources["PlayingGrow"];
+                grow.Begin();
+            }
         }
 
         private void FadeIn()
@@ -134,7 +157,6 @@ namespace SpotifyOverlayNoAPI
                 fadeOut.Begin(this);
             }
         }
-        
 
         private string GetSpotifyTitle()
         {
@@ -152,27 +174,6 @@ namespace SpotifyOverlayNoAPI
             return device.AudioEndpointVolume.MasterVolumeLevelScalar * 100;
         }
 
-        private const int GWL_EXSTYLE = -20;
-        private const int WS_EX_TRANSPARENT = 0x00000020;
-        private const int WS_EX_TOOLWINDOW = 0x00000080;
-
-        [DllImport("user32.dll")]
-        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-        [DllImport("user32.dll")]
-        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-        private void SettingsButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            SetClickThrough(false); // Tıklanabilir hale getir
-        }
-
-        private void SettingsButton_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            SetClickThrough(true); // Tekrar click-through
-        }
-
-        // SADECE SettingsWindow kullanan versiyon
-        private SettingsWindow settingsWindow;
-
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             if (settingsWindow == null || !settingsWindow.IsLoaded)
@@ -183,11 +184,20 @@ namespace SpotifyOverlayNoAPI
             }
             else
             {
-                settingsWindow.Activate(); // Varsa zaten göster
+                settingsWindow.Activate();
             }
         }
 
+        private SettingsWindow settingsWindow;
 
+        private const int GWL_EXSTYLE = -20;
+        private const int WS_EX_TRANSPARENT = 0x00000020;
+        private const int WS_EX_TOOLWINDOW = 0x00000080;
 
+        [DllImport("user32.dll")]
+        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll")]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
     }
 }

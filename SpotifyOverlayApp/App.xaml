@@ -53,6 +53,32 @@
                           BlurRadius="15"
                           ShadowDepth="0"
                           Opacity="0.5"/>
+        <Style x:Key="RoundedProgressBarStyle" TargetType="ProgressBar">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar">
+                        <Border Background="{TemplateBinding Background}" 
+                        CornerRadius="4"
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid x:Name="PART_Track">
+                                <Rectangle x:Name="PART_Indicator"
+                                   HorizontalAlignment="Left"
+                                   Fill="{TemplateBinding Foreground}"
+                                   RadiusX="4" RadiusY="4"
+                                   Width="0"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsIndeterminate" Value="True">
+                                <Setter TargetName="PART_Indicator" Property="Visibility" Value="Collapsed"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="ModernButtonStyle" TargetType="Button">
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -61,7 +87,7 @@
             <Setter Property="Background" Value="#44000000"/>
             <Setter Property="BorderBrush" Value="#88FFFFFF"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="Padding" Value="15"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="Template">
@@ -70,7 +96,7 @@
                         <Border Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="12">
+                        CornerRadius="7">
                             <ContentPresenter HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
                                       RecognizesAccessKey="True"/>

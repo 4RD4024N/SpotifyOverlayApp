@@ -13,27 +13,83 @@
 
     <Window.Resources>
         <CubicEase x:Key="SmoothEase" EasingMode="EaseInOut"/>
+
         <Storyboard x:Key="FadeIn">
             <DoubleAnimation Storyboard.TargetProperty="Opacity"
                              From="0" To="1" Duration="0:0:0.7"
                              EasingFunction="{StaticResource SmoothEase}" />
         </Storyboard>
+
         <Storyboard x:Key="FadeOut">
             <DoubleAnimation Storyboard.TargetProperty="Opacity"
                              From="1" To="0" Duration="0:0:0.7"
                              EasingFunction="{StaticResource SmoothEase}" />
         </Storyboard>
+
+        <Storyboard x:Key="PausedShrink">
+            <DoubleAnimation Storyboard.TargetName="MainBorder"
+                             Storyboard.TargetProperty="LayoutTransform.ScaleX"
+                             To="0.92" Duration="0:0:0.3" />
+            <DoubleAnimation Storyboard.TargetName="MainBorder"
+                             Storyboard.TargetProperty="LayoutTransform.ScaleY"
+                             To="0.92" Duration="0:0:0.3" />
+            <DoubleAnimation Storyboard.TargetName="MainBorder"
+                             Storyboard.TargetProperty="Opacity"
+                             To="0.65" Duration="0:0:0.3" />
+        </Storyboard>
+
+        <Storyboard x:Key="PlayingGrow">
+            <DoubleAnimation Storyboard.TargetName="MainBorder"
+                             Storyboard.TargetProperty="LayoutTransform.ScaleX"
+                             To="1.0" Duration="0:0:0.3" />
+            <DoubleAnimation Storyboard.TargetName="MainBorder"
+                             Storyboard.TargetProperty="LayoutTransform.ScaleY"
+                             To="1.0" Duration="0:0:0.3" />
+            <DoubleAnimation Storyboard.TargetName="MainBorder"
+                             Storyboard.TargetProperty="Opacity"
+                             To="1.0" Duration="0:0:0.3" />
+        </Storyboard>
+
+        <!-- VolumeBar renk gradyanı -->
+        <LinearGradientBrush x:Key="VolumeBarBrush" StartPoint="0,0" EndPoint="1,0">
+            <GradientStop Color="LimeGreen" Offset="0.0" />
+            <GradientStop Color="Yellow" Offset="0.5" />
+            <GradientStop Color="Red" Offset="1.0" />
+        </LinearGradientBrush>
+
+        <!-- Modern düğme stili -->
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+           
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <Grid Margin="10">
-        <!-- Bu Border tıklanamaz olacak -->
         <Border x:Name="MainBorder"
                 Background="{DynamicResource CurrentGradient}"
                 CornerRadius="18"
                 Padding="18"
                 Effect="{DynamicResource DropShadow}"
                 IsHitTestVisible="False">
-            <!-- işte burası -->
+            <Border.LayoutTransform>
+                <ScaleTransform ScaleX="1" ScaleY="1"/>
+            </Border.LayoutTransform>
+
             <StackPanel>
                 <TextBlock x:Name="SongText"
                            FontSize="20"
@@ -50,19 +106,40 @@
                            FontFamily="Segoe UI Semilight"
                            TextWrapping="NoWrap"
                            Margin="0,0,0,2"/>
+
+                <ProgressBar x:Name="VolumeBar"
+             Height="6"
+             Minimum="0" Maximum="100"
+             Value="0"
+             Margin="0,8,0,0"
+             Foreground="{DynamicResource VolumeBarBrush}"
+             Background="#222"
+             BorderThickness="0"/>
+
+
+                <TextBlock x:Name="PlayPauseIcon"
+                           Text="▶️"
+                           FontSize="20"
+                           Margin="0,6,0,0"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           Foreground="White"
+                           RenderTransformOrigin="0.5,0.5">
+                    <TextBlock.RenderTransform>
+                        <ScaleTransform ScaleX="1" ScaleY="1"/>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
             </StackPanel>
         </Border>
 
-        <!-- Bu düğme tıklanabilir olacak -->
         <Button x:Name="SettingsButton"
-        Content="⚙"
-        Width="30" Height="30"
-        HorizontalAlignment="Right"
-        VerticalAlignment="Bottom"
-        Margin="10"
-        Click="SettingsButton_Click"
-        Style="{StaticResource ModernButtonStyle}"
-        FontSize="16"/>
-
+                Content="⚙"
+                Width="30" Height="30"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Margin="10"
+                Click="SettingsButton_Click"
+                Style="{StaticResource ModernButtonStyle}"
+                FontSize="16"/>
     </Grid>
 </Window>
