@@ -1,0 +1,12 @@
+﻿<Application.Resources>
+    <LinearGradientBrush x:Key="GradientBG" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#FF222831" Offset="0.0"/>
+        <GradientStop Color="#FF393E46" Offset="1.0"/>
+    </LinearGradientBrush>
+
+    <DropShadowEffect x:Key="DropShadow"
+                      Color="Black"
+                      BlurRadius="15"
+                      ShadowDepth="0"
+                      Opacity="0.5"/>
+</Application.Resources>

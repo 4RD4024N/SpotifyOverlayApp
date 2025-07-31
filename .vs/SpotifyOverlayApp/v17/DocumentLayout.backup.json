@@ -1,0 +1,86 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\arda0\\Desktop\\SpotifyOverlayApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{997BFA03-AA42-46E5-A945-67194AB4BC94}|SpotifyOverlayApp\\SpotifyOverlayApp.csproj|c:\\users\\arda0\\desktop\\spotifyoverlayapp\\spotifyoverlayapp\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{997BFA03-AA42-46E5-A945-67194AB4BC94}|SpotifyOverlayApp\\SpotifyOverlayApp.csproj|solutionrelative:spotifyoverlayapp\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{997BFA03-AA42-46E5-A945-67194AB4BC94}|SpotifyOverlayApp\\SpotifyOverlayApp.csproj|c:\\users\\arda0\\desktop\\spotifyoverlayapp\\spotifyoverlayapp\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{997BFA03-AA42-46E5-A945-67194AB4BC94}|SpotifyOverlayApp\\SpotifyOverlayApp.csproj|solutionrelative:spotifyoverlayapp\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{997BFA03-AA42-46E5-A945-67194AB4BC94}|SpotifyOverlayApp\\SpotifyOverlayApp.csproj|c:\\users\\arda0\\desktop\\spotifyoverlayapp\\spotifyoverlayapp\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{997BFA03-AA42-46E5-A945-67194AB4BC94}|SpotifyOverlayApp\\SpotifyOverlayApp.csproj|solutionrelative:spotifyoverlayapp\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{997BFA03-AA42-46E5-A945-67194AB4BC94}|SpotifyOverlayApp\\SpotifyOverlayApp.csproj|c:\\users\\arda0\\desktop\\spotifyoverlayapp\\spotifyoverlayapp\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{997BFA03-AA42-46E5-A945-67194AB4BC94}|SpotifyOverlayApp\\SpotifyOverlayApp.csproj|solutionrelative:spotifyoverlayapp\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\arda0\\Desktop\\SpotifyOverlayApp\\SpotifyOverlayApp\\App.xaml.cs",
+              "RelativeDocumentMoniker": "SpotifyOverlayApp\\App.xaml.cs",
+              "ToolTip": "C:\\Users\\arda0\\Desktop\\SpotifyOverlayApp\\SpotifyOverlayApp\\App.xaml.cs",
+              "RelativeToolTip": "SpotifyOverlayApp\\App.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T15:53:01.21Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\arda0\\Desktop\\SpotifyOverlayApp\\SpotifyOverlayApp\\App.xaml",
+              "RelativeDocumentMoniker": "SpotifyOverlayApp\\App.xaml",
+              "ToolTip": "C:\\Users\\arda0\\Desktop\\SpotifyOverlayApp\\SpotifyOverlayApp\\App.xaml",
+              "RelativeToolTip": "SpotifyOverlayApp\\App.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-07-31T15:52:58.974Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\arda0\\Desktop\\SpotifyOverlayApp\\SpotifyOverlayApp\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "SpotifyOverlayApp\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\arda0\\Desktop\\SpotifyOverlayApp\\SpotifyOverlayApp\\MainWindow.xaml",
+              "RelativeToolTip": "SpotifyOverlayApp\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-07-31T15:42:53.803Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\arda0\\Desktop\\SpotifyOverlayApp\\SpotifyOverlayApp\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "SpotifyOverlayApp\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\arda0\\Desktop\\SpotifyOverlayApp\\SpotifyOverlayApp\\MainWindow.xaml.cs",
+              "RelativeToolTip": "SpotifyOverlayApp\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAHgAAAAAAAAAAAAQwCgAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T15:42:49.979Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
