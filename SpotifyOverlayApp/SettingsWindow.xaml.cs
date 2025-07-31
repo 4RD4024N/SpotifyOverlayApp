@@ -20,6 +20,10 @@ namespace SpotifyOverlayNoAPI
                 ThemeManager.SaveTheme(paletteKey);
             }
         }
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
 
         private void ApplyCustomHex_Click(object sender, RoutedEventArgs e)
         {
@@ -33,11 +37,11 @@ namespace SpotifyOverlayNoAPI
                 ThemeManager.ApplyGradientFromHex(hex);
                 ThemeManager.SaveTheme(hex);
 
-                MessageBox.Show("Renk uygulandı!", "Bilgi", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Color change applied!", "Bilgi", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch
             {
-                MessageBox.Show("Geçersiz HEX kodu. Örnek: #FF112233", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Invalid HEX code. Ex: #FF112233", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

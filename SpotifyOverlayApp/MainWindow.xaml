@@ -55,15 +55,14 @@
 
         <!-- Bu düğme tıklanabilir olacak -->
         <Button x:Name="SettingsButton"
-                Content="⚙"
-                Width="30" Height="30"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Margin="10"
-                Click="SettingsButton_Click"
-                Background="Transparent"
-                Foreground="White"
-                FontSize="16"
-                Cursor="Hand"/>
+        Content="⚙"
+        Width="30" Height="30"
+        HorizontalAlignment="Right"
+        VerticalAlignment="Bottom"
+        Margin="10"
+        Click="SettingsButton_Click"
+        Style="{StaticResource ModernButtonStyle}"
+        FontSize="16"/>
+
     </Grid>
 </Window>

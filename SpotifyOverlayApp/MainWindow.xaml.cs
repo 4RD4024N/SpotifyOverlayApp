@@ -76,7 +76,7 @@ namespace SpotifyOverlayNoAPI
             string currentTitle = GetSpotifyTitle();
             float volume = GetSystemVolume();
 
-            VolumeText.Text = $"🔊 Ses seviyesi: %{volume:F0}";
+            VolumeText.Text = $"🔊 Volume : %{volume:F0}";
             bool volumeChanged = Math.Abs(volume - lastVolume) > 0.5;
             lastVolume = volume;
 
