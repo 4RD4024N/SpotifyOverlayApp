@@ -15,14 +15,20 @@ namespace SpotifyOverlayNoAPI
             if (ThemeComboBox.SelectedItem is ComboBoxItem selected &&
                 selected.Tag is string paletteKey)
             {
-                var brush = (System.Windows.Media.Brush)Application.Current.Resources[paletteKey];
-                Application.Current.Resources["CurrentGradient"] = brush;
-                ThemeManager.SaveTheme(paletteKey);
+                if (paletteKey == "RGB")
+                {
+                    Application.Current.Resources["IsRgbTheme"] = true;
+                    ThemeManager.StartRgbAnimation(); // 🔥 Bu eksikti
+                    ThemeManager.SaveTheme("RGB");
+                }
+                else
+                {
+                    Application.Current.Resources["IsRgbTheme"] = false;
+                    var brush = (System.Windows.Media.Brush)Application.Current.Resources[paletteKey];
+                    Application.Current.Resources["CurrentGradient"] = brush;
+                    ThemeManager.SaveTheme(paletteKey);
+                }
             }
-        }
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
 
         private void ApplyCustomHex_Click(object sender, RoutedEventArgs e)
@@ -45,5 +51,9 @@ namespace SpotifyOverlayNoAPI
             }
         }
 
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

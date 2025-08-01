@@ -95,6 +95,7 @@
                            FontSize="20"
                            Foreground="White"
                            FontWeight="Bold"
+                           MouseLeftButtonDown="SongText_MouseLeftButtonDown"
                            FontFamily="Segoe UI"
                            TextTrimming="CharacterEllipsis"
                            TextWrapping="NoWrap"

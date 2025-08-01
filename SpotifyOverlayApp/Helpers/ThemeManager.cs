@@ -1,17 +1,74 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace SpotifyOverlayNoAPI
 {
     public static class ThemeManager
     {
         private static readonly string ConfigPath = "theme.json";
+        public static bool IsRgbMode = false;
+        public static DispatcherTimer rgbTimer;
+
+        public static void StartRgbAnimation()
+        {
+            if (rgbTimer != null)
+                return;
+
+            rgbTimer = new DispatcherTimer();
+            rgbTimer.Interval = TimeSpan.FromMilliseconds(80);
+            rgbTimer.Tick += (s, e) =>
+            {
+                Application.Current.Resources["RgbColor1"] = GetRandomBrush();
+                Application.Current.Resources["RgbColor2"] = GetRandomBrush();
+                Application.Current.Resources["RgbColor3"] = GetRandomBrush();
+            };
+            rgbTimer.Start();
+            IsRgbMode = true;
+
+            // RGB moduna uygun gradyan ayarla
+            var brush = new LinearGradientBrush
+            {
+                StartPoint = new Point(0, 0),
+                EndPoint = new Point(1, 1)
+            };
+
+            brush.GradientStops.Add(new GradientStop(((SolidColorBrush)Application.Current.Resources["RgbColor1"]).Color, 0.0));
+            brush.GradientStops.Add(new GradientStop(((SolidColorBrush)Application.Current.Resources["RgbColor2"]).Color, 0.5));
+            brush.GradientStops.Add(new GradientStop(((SolidColorBrush)Application.Current.Resources["RgbColor3"]).Color, 1.0));
+
+            Application.Current.Resources["CurrentGradient"] = brush;
+
+        }
+
+        public static void StopRgbAnimation()
+        {
+            if (rgbTimer != null)
+            {
+                rgbTimer.Stop();
+                rgbTimer = null;
+                IsRgbMode = false;
+            }
+        }
+
+        private static Brush GetRandomBrush()
+        {
+            Random rand = new Random();
+            return new SolidColorBrush(Color.FromRgb(
+                (byte)rand.Next(100, 255),
+                (byte)rand.Next(100, 255),
+                (byte)rand.Next(100, 255)));
+        }
+
         public static void ApplyGradientFromHex(string hex)
         {
             try
             {
+                StopRgbAnimation();
+
                 Color baseColor = (Color)ColorConverter.ConvertFromString(hex);
                 Color lighter = ChangeColorBrightness(baseColor, 0.2f);
                 Color darker = ChangeColorBrightness(baseColor, -0.2f);
@@ -24,7 +81,6 @@ namespace SpotifyOverlayNoAPI
             }
             catch
             {
-                // Hatalı renk girilmişse fallback
                 Application.Current.Resources["CurrentGradient"] = Brushes.DarkSlateGray;
             }
         }
@@ -49,6 +105,7 @@ namespace SpotifyOverlayNoAPI
         {
             return Math.Max(min, Math.Min(max, val));
         }
+
         public static void ApplySavedTheme()
         {
             if (!File.Exists(ConfigPath)) return;
@@ -60,14 +117,18 @@ namespace SpotifyOverlayNoAPI
 
                 if (config == null || string.IsNullOrEmpty(config.Theme)) return;
 
-                if (Application.Current.Resources.Contains(config.Theme))
+                if (config.Theme == "RGB")
                 {
-                    // Hazır tema (BluePalette vs.)
+                    StartRgbAnimation();
+                }
+                else if (Application.Current.Resources.Contains(config.Theme))
+                {
+                    StopRgbAnimation();
                     Application.Current.Resources["CurrentGradient"] = Application.Current.Resources[config.Theme];
                 }
                 else
                 {
-                    // Custom HEX
+                    StopRgbAnimation();
                     var converter = new BrushConverter();
                     var brush = (Brush)converter.ConvertFromString(config.Theme);
                     Application.Current.Resources["CurrentGradient"] = brush;
@@ -85,10 +146,10 @@ namespace SpotifyOverlayNoAPI
             var json = JsonSerializer.Serialize(config);
             File.WriteAllText(ConfigPath, json);
         }
+    }
 
-        private class ThemeConfig
-        {
-            public string Theme { get; set; }
-        }
+    public class ThemeConfig
+    {
+        public string Theme { get; set; }
     }
 }

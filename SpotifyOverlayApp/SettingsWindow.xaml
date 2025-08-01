@@ -65,6 +65,8 @@
                     <ComboBoxItem Content="Purple" Tag="PurplePalette"/>
                     <ComboBoxItem Content="Orange" Tag="OrangePalette"/>
                     <ComboBoxItem Content="Gray" Tag="GrayPalette"/>
+                    <ComboBoxItem Content="RGB" Tag="RGB"/>
+                    
                 </ComboBox>
 
                 <TextBlock Text="🔧 Special HEX Code"

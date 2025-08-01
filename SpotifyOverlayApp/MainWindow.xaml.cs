@@ -2,12 +2,14 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using Hardcodet.Wpf.TaskbarNotification;
 using NAudio.CoreAudioApi;
-using System.Windows.Media.Animation;
-using System.Windows.Controls;
 
 namespace SpotifyOverlayNoAPI
 {
@@ -17,10 +19,14 @@ namespace SpotifyOverlayNoAPI
         private DispatcherTimer hideTimer;
         private TaskbarIcon trayIcon;
         private MMDeviceEnumerator devEnum = new MMDeviceEnumerator();
+        private DispatcherTimer rgbTimer;
+        private byte rgbStep = 0;
 
         private string lastSongTitle = "";
         private float lastVolume = -1;
         private bool isVisibleNow = false;
+        private Point dragStartPoint;
+        private bool isDragging = false;
 
         public MainWindow()
         {
@@ -34,9 +40,66 @@ namespace SpotifyOverlayNoAPI
             int extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
             SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TOOLWINDOW);
         }
+        private void SongText_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ButtonState == MouseButtonState.Pressed)
+            {
+                dragStartPoint = e.GetPosition(this);
+                isDragging = true;
+                this.DragMove();
+            }
+        }
+        private void AnimateRgb(object sender, EventArgs e)
+        {
+            if (!(Application.Current.Resources["IsRgbTheme"] is bool isRgb) || !isRgb)
+                return;
 
+            rgbStep++;
+            if (rgbStep > 255) rgbStep = 0;
+
+            // Renk dönüşümü (HSV bazlı geçiş yerine lineer RGB geçişi)
+            byte r = (byte)(Math.Sin(rgbStep * 0.05) * 127 + 128);
+            byte g = (byte)(Math.Sin(rgbStep * 0.05 + 2) * 127 + 128);
+            byte b = (byte)(Math.Sin(rgbStep * 0.05 + 4) * 127 + 128);
+
+            var color1 = System.Windows.Media.Color.FromRgb(r, g, b);
+            var color2 = System.Windows.Media.Color.FromRgb((byte)(255 - r), (byte)(255 - g), (byte)(255 - b));
+            var color3 = System.Windows.Media.Color.FromRgb(g, b, r);
+
+            Application.Current.Resources["RgbColor1"] = color1;
+            Application.Current.Resources["RgbColor2"] = color2;
+            Application.Current.Resources["RgbColor3"] = color3;
+        }
+
+
+        public static Color ColorFromHSV(double hue, double saturation, double value)
+        {
+            int hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6;
+            double f = hue / 60 - Math.Floor(hue / 60);
+
+            value = value * 255;
+            byte v = (byte)value;
+            byte p = (byte)(value * (1 - saturation));
+            byte q = (byte)(value * (1 - f * saturation));
+            byte t = (byte)(value * (1 - (1 - f) * saturation));
+
+            return hi switch
+            {
+                0 => Color.FromRgb(v, t, p),
+                1 => Color.FromRgb(q, v, p),
+                2 => Color.FromRgb(p, v, t),
+                3 => Color.FromRgb(p, q, v),
+                4 => Color.FromRgb(t, p, v),
+                _ => Color.FromRgb(v, p, q),
+            };
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            rgbTimer = new DispatcherTimer();
+            rgbTimer.Interval = TimeSpan.FromMilliseconds(100);
+            rgbTimer.Tick += AnimateRgb;
+            rgbTimer.Start();
+
             if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
                 this.Opacity = 1;
