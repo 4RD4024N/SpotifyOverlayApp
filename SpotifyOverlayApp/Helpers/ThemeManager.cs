@@ -30,38 +30,77 @@ namespace SpotifyOverlayNoAPI
         }
 
 
+        private static double hue = 0;
+        private static Color HslToRgb(double h, double s, double l)
+        {
+            h /= 360;
+            double r, g, b;
+
+            if (s == 0)
+            {
+                r = g = b = l;
+            }
+            else
+            {
+                Func<double, double, double, double> hueToRgb = (p, q, t) =>
+                {
+                    if (t < 0) t += 1;
+                    if (t > 1) t -= 1;
+                    if (t < 1.0 / 6) return p + (q - p) * 6 * t;
+                    if (t < 1.0 / 2) return q;
+                    if (t < 2.0 / 3) return p + (q - p) * (2.0 / 3 - t) * 6;
+                    return p;
+                };
+
+                double q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                double p = 2 * l - q;
+
+                r = hueToRgb(p, q, h + 1.0 / 3);
+                g = hueToRgb(p, q, h);
+                b = hueToRgb(p, q, h - 1.0 / 3);
+            }
+
+            return Color.FromRgb((byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
+        }
+        public static void UpdateRgbSpeed(int milliseconds)
+        {
+            if (rgbTimer != null)
+            {
+                rgbTimer.Interval = TimeSpan.FromMilliseconds(milliseconds);
+            }
+        }
+
         public static void StartRgbAnimation()
         {
             if (rgbTimer != null) return;
 
             rgbTimer = new DispatcherTimer();
-            rgbTimer.Interval = TimeSpan.FromMilliseconds(120);
+            rgbTimer.Interval = TimeSpan.FromMilliseconds(60);
             rgbTimer.Tick += (s, e) =>
             {
+                hue = (hue + 1) % 360; // 0 - 359 arasında döner
+                var baseColor = HslToRgb(hue, 0.8, 0.6);
+                var lighter = HslToRgb((hue + 20) % 360, 0.9, 0.7);
+                var darker = HslToRgb((hue + 340) % 360, 0.9, 0.4);
 
-
-                rgbTimer.Tick += (s, e) =>
+                var brush = new LinearGradientBrush
                 {
-                    var c1 = GetRandomColor();
-                    var c2 = GetRandomColor();
-                    var c3 = GetRandomColor();
-
-                    var brush = new LinearGradientBrush
-                    {
-                        StartPoint = new Point(0, 0),
-                        EndPoint = new Point(1, 1)
-                    };
-                    brush.GradientStops.Add(new GradientStop(c1, 0.0));
-                    brush.GradientStops.Add(new GradientStop(c2, 0.5));
-                    brush.GradientStops.Add(new GradientStop(c3, 1.0));
-
-                    Application.Current.Resources["CurrentGradient"] = brush;
+                    StartPoint = new Point(0, 0),
+                    EndPoint = new Point(1, 1),
+                    GradientStops = new GradientStopCollection
+            {
+                new GradientStop(lighter, 0),
+                new GradientStop(baseColor, 0.5),
+                new GradientStop(darker, 1)
+            }
                 };
 
+                Application.Current.Resources["CurrentGradient"] = brush;
             };
             rgbTimer.Start();
             IsRgbMode = true;
         }
+
 
 
         public static void StopRgbAnimation()

@@ -9,27 +9,43 @@ namespace SpotifyOverlayNoAPI
         {
             InitializeComponent();
         }
-
-        private void ThemeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void RgbSpeedComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ThemeComboBox.SelectedItem is ComboBoxItem selected &&
-                selected.Tag is string paletteKey)
+            if (RgbSpeedComboBox.SelectedItem is ComboBoxItem selected &&
+                int.TryParse(selected.Tag.ToString(), out int interval))
             {
-                if (paletteKey == "RGB")
-                {
-                    ThemeManager.StartRgbAnimation();
-                    ThemeManager.SaveTheme("RGB");
-                }
-                else
-                {
-                    ThemeManager.StopRgbAnimation();
-
-                    var brush = (System.Windows.Media.Brush)Application.Current.Resources[paletteKey];
-                    Application.Current.Resources["CurrentGradient"] = brush;
-                    ThemeManager.SaveTheme(paletteKey);
-                }
+                ThemeManager.UpdateRgbSpeed(interval);
             }
         }
+
+
+        private void ThemeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+{
+    if (ThemeComboBox.SelectedItem is ComboBoxItem selected &&
+        selected.Tag is string paletteKey)
+    {if (paletteKey == "RGB")
+{
+    Application.Current.Resources["IsRgbTheme"] = true;
+    RgbSpeedLabel.Visibility = Visibility.Visible;
+    RgbSpeedComboBox.Visibility = Visibility.Visible;
+
+    
+    ThemeManager.StartRgbAnimation();
+    ThemeManager.SaveTheme("RGB");
+}
+        else
+        {
+            Application.Current.Resources["IsRgbTheme"] = false;
+            RgbSpeedLabel.Visibility = Visibility.Collapsed;
+            RgbSpeedComboBox.Visibility = Visibility.Collapsed;
+                    ThemeManager.StopRgbAnimation();
+            var brush = (System.Windows.Media.Brush)Application.Current.Resources[paletteKey];
+            Application.Current.Resources["CurrentGradient"] = brush;
+            ThemeManager.SaveTheme(paletteKey);
+        }
+    }
+}
+
 
 
         private void ApplyCustomHex_Click(object sender, RoutedEventArgs e)

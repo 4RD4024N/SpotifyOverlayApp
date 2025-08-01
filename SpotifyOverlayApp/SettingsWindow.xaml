@@ -47,6 +47,7 @@
         <Grid>
             <StackPanel>
                 <TextBlock Text="🎨 Theme Selection"
+                           
                            FontSize="16"
                            FontWeight="Bold"
                            Margin="0,0,0,12"
@@ -68,17 +69,31 @@
                     <ComboBoxItem Content="RGB" Tag="RGB"/>
                     
                 </ComboBox>
+               
+
+                <TextBlock x:Name="RgbSpeedLabel" Text="RGB Hızı:" Foreground="White" FontWeight="Bold" Margin="0,20,0,4" Visibility="Collapsed"/>
+<ComboBox x:Name="RgbSpeedComboBox"
+          SelectionChanged="RgbSpeedComboBox_SelectionChanged"
+          Visibility="Collapsed">
+                    
+
+                <ComboBoxItem Foreground="Black"  Content="Yavaş" Tag="60"/>
+                <ComboBoxItem Foreground="Black" Content="Orta" Tag="30" IsSelected="True"/>
+                <ComboBoxItem Foreground="Black" Content="Hızlı" Tag="10"/>
+</ComboBox>
 
                 <TextBlock Text="🔧 Special HEX Code"
                            FontSize="14"
                            FontWeight="Bold"
                            Margin="0,20,0,6"
                            Foreground="White"/>
+              
 
                 <StackPanel Orientation="Horizontal">
                     <TextBox x:Name="HexInput" Width="120" Text="#FF007ACC"/>
                     <Button Content="Apply" Click="ApplyCustomHex_Click"
         Style="{StaticResource ModernButtonStyle}" Margin="4"/>
+                    
                 </StackPanel>
 
                 <Button Content="Close" Click="Close_Click"
