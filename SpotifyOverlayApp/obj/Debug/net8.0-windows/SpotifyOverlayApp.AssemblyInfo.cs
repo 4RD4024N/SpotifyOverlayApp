@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SpotifyOverlayApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7bd7edd48f83f55fd0c9e25f3405d5eb426e8fc2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+73760d4d2bac4a00b91357916baa702f70fe6b01")]
 [assembly: System.Reflection.AssemblyProductAttribute("SpotifyOverlayApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SpotifyOverlayApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

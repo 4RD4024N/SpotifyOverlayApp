@@ -187,13 +187,13 @@ namespace SpotifyOverlayNoAPI
         {
             if (string.IsNullOrEmpty(title) || title == "Spotify" || title == "Spotify Premium")
             {
-                PlayPauseIcon.Text = "⏸";
+                
                 var shrink = (Storyboard)this.Resources["PausedShrink"];
                 shrink.Begin();
             }
             else
             {
-                PlayPauseIcon.Text = "▶️";
+                
                 var grow = (Storyboard)this.Resources["PlayingGrow"];
                 grow.Begin();
             }
