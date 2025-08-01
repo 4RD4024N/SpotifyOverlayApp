@@ -17,19 +17,20 @@ namespace SpotifyOverlayNoAPI
             {
                 if (paletteKey == "RGB")
                 {
-                    Application.Current.Resources["IsRgbTheme"] = true;
-                    ThemeManager.StartRgbAnimation(); // 🔥 Bu eksikti
+                    ThemeManager.StartRgbAnimation();
                     ThemeManager.SaveTheme("RGB");
                 }
                 else
                 {
-                    Application.Current.Resources["IsRgbTheme"] = false;
+                    ThemeManager.StopRgbAnimation();
+
                     var brush = (System.Windows.Media.Brush)Application.Current.Resources[paletteKey];
                     Application.Current.Resources["CurrentGradient"] = brush;
                     ThemeManager.SaveTheme(paletteKey);
                 }
             }
         }
+
 
         private void ApplyCustomHex_Click(object sender, RoutedEventArgs e)
         {

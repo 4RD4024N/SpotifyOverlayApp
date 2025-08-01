@@ -12,37 +12,57 @@ namespace SpotifyOverlayNoAPI
         private static readonly string ConfigPath = "theme.json";
         public static bool IsRgbMode = false;
         public static DispatcherTimer rgbTimer;
+        private static Color lastColor = GetInitialColor();
+        private static Color GetRandomColor()
+        {
+            // Renk farkı küçük tutularak yumuşak geçiş sağlanır
+            byte newR = (byte)Math.Clamp(lastColor.R + new Random().Next(-20, 21), 0, 255);
+            byte newG = (byte)Math.Clamp(lastColor.G + new Random().Next(-20, 21), 0, 255);
+            byte newB = (byte)Math.Clamp(lastColor.B + new Random().Next(-20, 21), 0, 255);
+
+            lastColor = Color.FromRgb(newR, newG, newB);
+            return lastColor;
+        }
+
+        private static Color GetInitialColor()
+        {
+            return Color.FromRgb(120, 120, 255); // Başlangıç rengi
+        }
+
 
         public static void StartRgbAnimation()
         {
-            if (rgbTimer != null)
-                return;
+            if (rgbTimer != null) return;
 
             rgbTimer = new DispatcherTimer();
-            rgbTimer.Interval = TimeSpan.FromMilliseconds(80);
+            rgbTimer.Interval = TimeSpan.FromMilliseconds(120);
             rgbTimer.Tick += (s, e) =>
             {
-                Application.Current.Resources["RgbColor1"] = GetRandomBrush();
-                Application.Current.Resources["RgbColor2"] = GetRandomBrush();
-                Application.Current.Resources["RgbColor3"] = GetRandomBrush();
+
+
+                rgbTimer.Tick += (s, e) =>
+                {
+                    var c1 = GetRandomColor();
+                    var c2 = GetRandomColor();
+                    var c3 = GetRandomColor();
+
+                    var brush = new LinearGradientBrush
+                    {
+                        StartPoint = new Point(0, 0),
+                        EndPoint = new Point(1, 1)
+                    };
+                    brush.GradientStops.Add(new GradientStop(c1, 0.0));
+                    brush.GradientStops.Add(new GradientStop(c2, 0.5));
+                    brush.GradientStops.Add(new GradientStop(c3, 1.0));
+
+                    Application.Current.Resources["CurrentGradient"] = brush;
+                };
+
             };
             rgbTimer.Start();
             IsRgbMode = true;
-
-            // RGB moduna uygun gradyan ayarla
-            var brush = new LinearGradientBrush
-            {
-                StartPoint = new Point(0, 0),
-                EndPoint = new Point(1, 1)
-            };
-
-            brush.GradientStops.Add(new GradientStop(((SolidColorBrush)Application.Current.Resources["RgbColor1"]).Color, 0.0));
-            brush.GradientStops.Add(new GradientStop(((SolidColorBrush)Application.Current.Resources["RgbColor2"]).Color, 0.5));
-            brush.GradientStops.Add(new GradientStop(((SolidColorBrush)Application.Current.Resources["RgbColor3"]).Color, 1.0));
-
-            Application.Current.Resources["CurrentGradient"] = brush;
-
         }
+
 
         public static void StopRgbAnimation()
         {
@@ -53,7 +73,6 @@ namespace SpotifyOverlayNoAPI
                 IsRgbMode = false;
             }
         }
-
         private static Brush GetRandomBrush()
         {
             Random rand = new Random();
